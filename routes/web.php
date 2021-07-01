@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PremController;
+use App\Http\Controllers\DeuxController;
+use App\Http\Controllers\TroisController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,84 +16,97 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// exercice
+// -reprend l'exercice_route_exo_5
+// -modifier les routes pour utiliser des controller qui return les view avec leurs data qui sont demandées dans l'exercice
+// -rajouter des name() a chaque route (adapter la nav en conséquence)
+// Dans un nouveau projet : laravel_controller_exo_2
+// -créer une route qui via un controller retourne une view users
+// -créer un objet avec des utilisateurs qu'on renvoi et affiche les données dans la view users
+// -les données à envoyer sont : ID, nom, age, emal
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/contact/sav', function () {
-    return view('infos.contact.sav');
-})->name('sav');
 
-Route::get('/contact/partenariat', function () {
-    return view('infos.contact.partenariat');
-})->name('partenariat');
+Route::get('/', [TroisController::class,'index']);
 
-Route::get('/contact/info', function () {
-    return view('infos.contact.info');
-})->name('info');
+Route::get('/contact/sav', [TroisController::class,'servApVente'])->name('sav');
 
-Route::get('/team/front', function () {
-    return view('team.web.dev.frontend');
-})->name('frontend');
+Route::get('/contact/partenariat', [TroisController::class,'partena'])->name('partenariat');
 
-Route::get('/team/backend', function () {
-    return view('team.web.dev.backend');
-})->name('backend');
+Route::get('/contact/info', [TroisController::class,'partenariaz'])->name('info');
 
-view()->composer(['*'],function ($view) {
-    $back=[
-        'personne1'=>[
-            'nom'=>'Handy', 
-            'fonction'=>'Backend dev', 
-            'image'=> asset('img/salade.jpg')
-        ],
-        'personne2'=>[
-            'nom'=>'Hendeck', 
-            'fonction'=>'Backend dev', 
-            'image'=> asset('img/salade.jpg')
-        ],
-        'personne3'=>[
-            'nom'=>'Harouf', 
-            'fonction'=>'Backend dev', 
-            'image'=> asset('img/salade.jpg')
-        ],
-        'personne4'=>[
-            'nom'=>'Hancock', 
-            'fonction'=>'Backend dev', 
-            'image'=> asset('img/salade.jpg')
-        ]
+Route::get('/team/front',[PremController::class,'front'] )->name('frontend');
 
-    ];
+Route::get('/team/backend',[DeuxController::class,'back'] )->name('backend');
+
+
+//Methode Alexis
+//ex de route précedente avant controller
+
+
+//Route::get('/team/backend', function () {
+//    return view('team.web.dev.backend');
+//})->name('backend');
+
+//ex de comment on accederai au tableau via une boucle : 
+//foreach($nomTableau as $element){
+//<p>{{$element['nom']}}</p>
+//}
+
+
+// view()->composer(['*'],function ($view) {
+//     $back=[
+//         'personne1'=>[
+//             'nom'=>'Handy', 
+//             'fonction'=>'Backend dev', 
+//             'image'=> asset('img/salade.jpg')
+//         ],
+//         'personne2'=>[
+//             'nom'=>'Hendeck', 
+//             'fonction'=>'Backend dev', 
+//             'image'=> asset('img/salade.jpg')
+//         ],
+//         'personne3'=>[
+//             'nom'=>'Harouf', 
+//             'fonction'=>'Backend dev', 
+//             'image'=> asset('img/salade.jpg')
+//         ],
+//         'personne4'=>[
+//             'nom'=>'Hancock', 
+//             'fonction'=>'Backend dev', 
+//             'image'=> asset('img/salade.jpg')
+//         ]
+
+//     ];
     
-    $front=[
-        'personne1'=>[
-            'nom'=>'Handy front', 
-            'fonction'=>'Backend dev', 
-            'image'=> asset('img/salade.jpg')
-        ],
-        'personne2'=>[
-            'nom'=>'Hendeck front', 
-            'fonction'=>'Backend dev', 
-            'image'=> asset('img/salade.jpg')
-        ],
-        'personne3'=>[
-            'nom'=>'Harouf front', 
-            'fonction'=>'Backend dev', 
-            'image'=> asset('img/salade.jpg')
-        ],
-        'personne4'=>[
-            'nom'=>'Hancock front', 
-            'fonction'=>'Backend dev', 
-            'image'=> asset('img/salade.jpg')
-        ],
-        'personne5'=>[
-            'nom'=>'Hmihay front', 
-            'fonction'=>'Backend dev', 
-            'image'=> asset('img/salade.jpg')
-        ]
+//     $front=[
+//         'personne1'=>[
+//             'nom'=>'Handy front', 
+//             'fonction'=>'Backend dev', 
+//             'image'=> asset('img/salade.jpg')
+//         ],
+//         'personne2'=>[
+//             'nom'=>'Hendeck front', 
+//             'fonction'=>'Backend dev', 
+//             'image'=> asset('img/salade.jpg')
+//         ],
+//         'personne3'=>[
+//             'nom'=>'Harouf front', 
+//             'fonction'=>'Backend dev', 
+//             'image'=> asset('img/salade.jpg')
+//         ],
+//         'personne4'=>[
+//             'nom'=>'Hancock front', 
+//             'fonction'=>'Backend dev', 
+//             'image'=> asset('img/salade.jpg')
+//         ],
+//         'personne5'=>[
+//             'nom'=>'Hmihay front', 
+//             'fonction'=>'Backend dev', 
+//             'image'=> asset('img/salade.jpg')
+//         ]
 
-    ];
-    $view->with('back',$back);
-    $view->with('front',$front);
-});
+//     ];
+//     $view->with('back',$back);
+//     $view->with('front',$front);
+// });
 
